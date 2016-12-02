@@ -66,7 +66,7 @@
 	}
 
 	let list = new LinkedList();
-	for (let i = 0; i < 20; i++) {
+	for (let i = 0; i < 5; i++) {
 		list.insert(i, i);
 	}
 	console.log(list);
@@ -113,15 +113,41 @@
 		let node = temp.pop();
 		while (node) {
 			reversed.length++;
-			node.next = null;
-			current.next = node;
-
-			current = current.next;
+			node.next = null; //set new next to null
+			current.next = node; //set current next to new node
+			current = current.next; //set current to new ndoe
 			node = temp.pop();
 		}
 		return reversed;
 	}
 
+	let loopList = new LinkedList();
+	loopList.insert(0, 0);
+	loopList.insert(1, 1);
+	loopList.insert(2, 2);
+	loopList.insert(3, 3);
+	loopList.insert(4, 4);
+	loopList.insert(5, 5);
+	loopList.insert(6, 6);
+	loopList.insert(7, 7);
+	loopList.insert(8, 8);
+	loopList.insert(9, 9);
+	loopList._find(9).next = loopList._find(4);
 
+	//hasLoop(list) will determine if a linked list has a loop or not
+	function hasLoop(list) {
+		let tortoise = list.head;
+		let hare = list.head;
+		let flag = false;
+		while(hare !== null && hare.next !== null) {
+			if (hare === tortoise && hare !== list.head && tortoise !== list.head) {
+				flag = true;
+				break;
+			}
+			hare = hare.next.next;
+			tortoise = tortoise.next;
+		}
+		return flag;
+	}
 </script>
 </html>
