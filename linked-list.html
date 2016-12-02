@@ -97,28 +97,41 @@
 
 	//reverse(list) reverses the linked list
 	function reverse(list) {
-		let temp = [];
-		let current = list.head;
+		// let temp = [];
+		// let current = list.head;
 		
-		while (current) {
-			temp.push(current);
-			current = current.next;
-		}
+		// while (current) {
+		// 	temp.push(current);
+		// 	current = current.next;
+		// }
 
-		let reversed = new LinkedList();
-		reversed.head = temp.pop();
-		reversed.length++;
-		current = reversed.head;
+		// let reversed = new LinkedList();
+		// reversed.head = temp.pop();
+		// reversed.length++;
+		// current = reversed.head;
 
-		let node = temp.pop();
-		while (node) {
-			reversed.length++;
-			node.next = null; //set new next to null
-			current.next = node; //set current next to new node
-			current = current.next; //set current to new ndoe
-			node = temp.pop();
+		// let node = temp.pop();
+		// while (node) {
+		// 	reversed.length++;
+		// 	node.next = null; //set new next to null
+		// 	current.next = node; //set current next to new node
+		// 	current = current.next; //set current to new ndoe
+		// 	node = temp.pop();
+		// }
+		// return reversed;
+
+		current = list.head;
+		next = null;
+		previous = null;
+		
+		while (current !== null) {
+			next = current.next; //set next to current.next
+			current.next = previous; //set current.next to the previous node
+			previous = current; //set previous to the current node
+			current = next; //set current node to the next node
 		}
-		return reversed;
+		list.head = previous;
+		return list;
 	}
 
 	let loopList = new LinkedList();
@@ -132,7 +145,7 @@
 	loopList.insert(7, 7);
 	loopList.insert(8, 8);
 	loopList.insert(9, 9);
-	loopList._find(9).next = loopList._find(4);
+	loopList._find(9).next = loopList._find(0);
 
 	//hasLoop(list) will determine if a linked list has a loop or not
 	function hasLoop(list) {
@@ -140,12 +153,12 @@
 		let hare = list.head;
 		let flag = false;
 		while(hare !== null && hare.next !== null) {
-			if (hare === tortoise && hare !== list.head && tortoise !== list.head) {
+			hare = hare.next.next;
+			tortoise = tortoise.next;
+			if (hare === tortoise) {
 				flag = true;
 				break;
 			}
-			hare = hare.next.next;
-			tortoise = tortoise.next;
 		}
 		return flag;
 	}
@@ -156,22 +169,19 @@
 		let hare = list.head;
 		let counter = 0;
 		while(hare !== null && hare.next !== null) {
-			if (hare === tortoise && hare !== list.head && tortoise !== list.head) {
-				hare = hare.next.next;
-				tortoise = tortoise.next;
-				counter++;
+			hare = hare.next.next;
+			tortoise = tortoise.next;
+			if (hare === tortoise) {
 				while(true) {
-					if (hare === tortoise) {
-						break;
-					}
 					hare = hare.next.next;
 					tortoise = tortoise.next;
 					counter++;
+					if (hare === tortoise) {
+						break;
+					}
 				}
 				break;
 			}
-			hare = hare.next.next;
-			tortoise = tortoise.next;
 		}
 		return counter;
 	}
