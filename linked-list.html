@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Linked Lists</title>
+</head>
+<body>
+
+</body>
+<script>
+	let LinkedList = () => {
+		this.length = 0;
+		this.head = null;
+	}
+
+	//best case O(1), avg & worst case O(n)
+	LinkedList.prototype.insert = (index, value) => {
+		if (index < 0 || index > this.length) {
+			throw new Error('Index error');
+		}
+
+		let newNode = {
+			value: value
+		};
+
+		if (index == 0) {
+			newNode.next = this.head; //next is null
+			this.head = newNode; // head is newNode
+		} else {
+			let node = this._find(index - 1);
+			newNode.next = node.next; //node.next was null but now newNode.next is null
+			node.next = newNode; //node.next points to newNode now
+		}
+		this.length++;
+	}
+
+	// avg & worst O(n)
+	LinkedList.prototype._find = (index) => {
+		let node = this.head;
+		for (let i = 0; i < index; i++) {
+			node = node.next;
+		}
+		return node;
+	} 
+</script>
+</html>
