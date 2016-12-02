@@ -85,15 +85,43 @@
 	
 	//findThirdToLast(list) find 3rd to last element in a linked list w/o using .length
 	function findThirdToLast(list) {
-		let thirdToLast = list.head;
+		let tortoise = list.head;
 		let hare = list.head.next.next;
 
 		while(hare !== null && hare.next !== null) {
 			hare = hare.next;
-			thirdToLast = thirdToLast.next;
+			tortoise = tortoise.next;
 		}
-		return thirdToLast;
+		return tortoise;
 	}
+
+	//reverse(list) reverses the linked list
+	function reverse(list) {
+		let temp = [];
+		let current = list.head;
+		
+		while (current) {
+			temp.push(current);
+			current = current.next;
+		}
+
+		let reversed = new LinkedList();
+		reversed.head = temp.pop();
+		reversed.length++;
+		current = reversed.head;
+
+		let node = temp.pop();
+		while (node) {
+			reversed.length++;
+			node.next = null;
+			current.next = node;
+
+			current = current.next;
+			node = temp.pop();
+		}
+		return reversed;
+	}
+
 
 </script>
 </html>
