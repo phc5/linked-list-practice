@@ -4,7 +4,7 @@
 	<title>Linked Lists</title>
 </head>
 <body>
-
+	<h1>This is a Linked List implementation.</h1>
 </body>
 <script>
 	let LinkedList = function() {
@@ -148,6 +148,32 @@
 			tortoise = tortoise.next;
 		}
 		return flag;
+	}
+
+	//loopLength(list) will determine the length of the loop
+	function loopLength(list) {
+		let tortoise = list.head;
+		let hare = list.head;
+		let counter = 0;
+		while(hare !== null && hare.next !== null) {
+			if (hare === tortoise && hare !== list.head && tortoise !== list.head) {
+				hare = hare.next.next;
+				tortoise = tortoise.next;
+				counter++;
+				while(true) {
+					if (hare === tortoise) {
+						break;
+					}
+					hare = hare.next.next;
+					tortoise = tortoise.next;
+					counter++;
+				}
+				break;
+			}
+			hare = hare.next.next;
+			tortoise = tortoise.next;
+		}
+		return counter;
 	}
 </script>
 </html>
