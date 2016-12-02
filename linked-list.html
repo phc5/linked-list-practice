@@ -7,13 +7,13 @@
 
 </body>
 <script>
-	let LinkedList = () => {
+	let LinkedList = function() {
 		this.length = 0;
 		this.head = null;
 	}
 
 	//best case O(1), avg & worst case O(n)
-	LinkedList.prototype.insert = (index, value) => {
+	LinkedList.prototype.insert = function(index, value) {
 		if (index < 0 || index > this.length) {
 			throw new Error('Index error');
 		}
@@ -34,12 +34,54 @@
 	}
 
 	// avg & worst O(n)
-	LinkedList.prototype._find = (index) => {
+	LinkedList.prototype._find = function(index) {
 		let node = this.head;
 		for (let i = 0; i < index; i++) {
 			node = node.next;
 		}
 		return node;
 	} 
+
+	// avg & worst O(n)
+	LinkedList.prototype.get = function(index) {
+		if (index < 0 || index >= this.length) {
+			throw new Error('Index error');
+		}
+		return this._find(index).value;
+	}
+
+	// best O(1), avg & worst O(n)
+	LinkedList.prototype.remove = function(index) {
+		if (index < 0 || index >= this.length) {
+			throw new Error('Index error');
+		}
+
+		if (index == 0) {
+			this.head = this.head.next;
+		} else {
+			let node = this._find(index - 1);
+			node.next = node.next.next;
+		}
+		this.length--;
+	}
+
+	let list = new LinkedList();
+	for (let i = 0; i < 20; i++) {
+		list.insert(i, i);
+	}
+	console.log(list);
+
+	//
+	function middle(list) {
+		let tortoise = list.head;
+		let hare = list.head;
+
+		while(hare !== null && hare.next !== null) {
+			hare = hare.next.next;
+			tortoise = tortoise.next;
+		}
+		return tortoise;
+	}
+	middle(list);
 </script>
 </html>
